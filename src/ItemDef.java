@@ -214,6 +214,76 @@ public final class ItemDef {
 		try {
 			File itemDefs = new File("itemdefs-dump.txt");
 			BufferedWriter writer = new BufferedWriter(new FileWriter(itemDefs));
+			writer.write("//id - name - noted - noteable - stackable - parentId - notedId - storeprice - highalch - lowalch\n");
+
+			for (int itemId = 0; itemId <= 14678; itemId++) {
+				ItemDef item = ItemDef.forID(itemId);
+
+				int id = item.id;
+				String name = item.name;
+
+				if (name == null || name.equalsIgnoreCase("null")) {
+					continue;
+				}
+
+				int certid = item.certID;
+
+				boolean noteable = false;
+				boolean noted = false;
+				int notedId = -1;
+				int parentId = -1;
+
+				//System.out.println(certid);
+
+				if (certid == -1) {
+					noted = false;
+					noteable = false;
+				}
+
+				else {
+
+					if (certid > item.id) {
+						notedId = certid;
+						noted = false;
+						noteable = true;
+					}
+
+					if (certid < item.id) {
+						noteable = false;
+						noted = true;
+						parentId = certid;
+					}
+
+				}
+
+				boolean stackable = item.stackable;
+				boolean members = item.isMembers;
+
+				int storePrice = item.value;
+				int lowAlchPrice = (int) (storePrice * 0.4);
+				int highAlchPrice = (int) (storePrice * 0.6);
+
+				String itemDefsString = String.format("%d:%s:%b:%b:%b:%d:%d:%d:%d:%d\n", id, name, noted, noteable, stackable, parentId, notedId, storePrice, highAlchPrice, lowAlchPrice);
+				System.out.println("Dump:" + itemDefsString);
+				writer.write(itemDefsString);
+			}
+
+			writer.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Item dump by Sky
+	 */
+	private static void dumpItemsOld() {
+		// dump items
+
+		try {
+			File itemDefs = new File("itemdefs-dump.txt");
+			BufferedWriter writer = new BufferedWriter(new FileWriter(itemDefs));
 			writer.write("//id - name - noted - noteable - stackable - parentId - notedId - members - storeprice\n");
 
 			for (int itemId = 0; itemId <= 14678; itemId++) {
