@@ -5,7 +5,7 @@ public class Configuration {
 	/**
 	 * Cache
 	 */
-	public static final String CACHE_LINK = "http://edgeville.org/cache/edgevillecache.zip";
+	public static final String CACHE_LINK = "http://cache.edgeville.org/edgevillecache.zip";
 	public static final String CACHE_DIRECTORY = System.getProperty("user.home") + "/edgevillecachev1";
 
 	public static ClientMode clientMode;
